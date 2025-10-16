@@ -230,8 +230,11 @@ def safe_name(url):
 
 if __name__ == '__main__':
     all_changes = {}
-    driver = create_driver(headless=True)  # * You might need to set headless to False for some websites to work
-    with driver:
+    driver = None
+    try:
+        driver = create_driver(headless=True)  # * You might need to set headless to False for some websites to work
+        if not driver:
+            sys.exit(1)
         for url, parser, wait_selector in parsers.urls_and_parsers:
             if any(site in url for site in disabled_sites):
                 print(f"Skipping disabled site: {url}")
@@ -257,19 +260,42 @@ if __name__ == '__main__':
                 if changes:
                     all_changes[url] = changes
 
-    if all_changes:
-        html_content = changes_to_html(all_changes, direction=email_direction)
-        try:
-            send_email("Important Changes Detected", html_content)
-            show_info_prompt("Info", "Important Changes Detected")
-        except Exception as e:
-            msg = (
-                f"Failed to send email:\n{e}\n\n"
-                "How to fix:\n"
-                "- Check your internet connection.\n"
-                "- Verify email server settings and credentials.\n"
-                "- Ensure firewall or antivirus is not blocking SMTP."
-            )
-            show_error_prompt("Email Sending Failed", msg)
-    else:
-        show_info_prompt("Info", "No changes detected.")
+        if all_changes:
+            html_content = changes_to_html(all_changes, direction=email_direction)
+            try:
+                send_email("Important Changes Detected", html_content)
+                show_info_prompt("Info", "Important Changes Detected")
+            except Exception as e:
+                msg = (
+                    f"Failed to send email:\n{e}\n\n"
+                    "How to fix:\n"
+                    "- Check your internet connection.\n"
+                    "- Verify email server settings and credentials.\n"
+                    "- Ensure firewall or antivirus is not blocking SMTP."
+                )
+                show_error_prompt("Email Sending Failed", msg)
+        else:
+            show_info_prompt("Info", "No changes detected.")
+    finally:
+        if driver:
+            try:
+                driver.quit()
+            except Exception:
+                pass
+            try:
+                service = getattr(driver, "service", None)
+                if service:
+                    stop = getattr(service, "stop", None)
+                    if callable(stop):
+                        try:
+                            stop()
+                        except Exception:
+                            pass
+                    proc = getattr(service, "process", None)
+                    if proc:
+                        try:
+                            proc.kill()
+                        except Exception:
+                            pass
+            except Exception:
+                pass

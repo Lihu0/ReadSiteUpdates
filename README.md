@@ -89,7 +89,7 @@ You can change those settings if needed.
 ### Scheduling
 
 > [!WARNING]  
-> By default, and it’s also better to compile the script (see [Compiling](#compiling)) and move it to another folder to schedule. To skip this, change `script_to_execute` in [`settings.ini`](settings.ini).
+> By default, and by recommendation, compile the script (see [Compiling](#compiling)) and move it to another folder to schedule. To skip this, change `script_to_execute` in [`settings.ini`](settings.ini).
 
 - Run [`scripts/init.bat`](scripts/init.bat) to schedule the script in the **Windows Task Scheduler** in the [`scripts/`](scripts/) folder.
 - You can adjust `start_time` and `interval` in [`settings.ini`](settings.ini).

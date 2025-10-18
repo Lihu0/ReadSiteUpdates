@@ -95,8 +95,8 @@ You can change those settings if needed.
 - You can adjust `start_time` and `interval` in [`settings.ini`](settings.ini).
 > [!IMPORTANT]  
 > Changes require rerunning the init script to take effect.
-- Run [`remove.bat`](remove.bat) to remove the scheduled task.
-- You can also run [`src/main.py`](src/main.py) manually to test changes explicitly.
+- Run [`scripts/remove.bat`](scripts/remove.bat) to remove the scheduled task in the [`scripts/`](scripts/) folder.
+- You can also run [`src/main.py`](src/main.py) (or the file you get after compiling) manually to test changes explicitly.
 
 > Non-Windows scheduling is under development.
 

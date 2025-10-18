@@ -1,8 +1,8 @@
-# ReadSiteUpdates 
+# ReadSiteUpdates
 
 **ReadSiteUpdates** is a lightweight Python script that monitors websites and sends email notifications whenever they are updated.
 
-## Installation 
+## Installation
 
 Install the required Python packages using [pip](https://pypi.org/project/pip/):
 
@@ -10,9 +10,9 @@ Install the required Python packages using [pip](https://pypi.org/project/pip/):
 pip install -r requirements.txt
 ```
 
-## Usage 
+## Usage
 
-1. **Create a parser file ([`src/parsers.py`](src/parsers.py))**  
+1. **Create a parser file ([`src/parsers.py`](src/parsers.py))**
 
 Your parser functions should follow this structure:
 
@@ -44,7 +44,9 @@ urls_and_parsers = [
     ("https://example.com", parse_html_example, "div")
 ]
 ```
+
 Where:
+
 - `"https://example.com"` is the URL the code fetches.
 - `parse_html_example` is the parsing function.
 - And `"div"` is the element that signals the page is fully loaded.
@@ -52,6 +54,7 @@ Where:
 2. **Configure your environment**
 
 Create a [`.env`](.env) file based on [`.env.example`](.env.example) and add a:
+
 - Receiver email
 - Sender email
 - Sender email password
@@ -59,8 +62,9 @@ Create a [`.env`](.env) file based on [`.env.example`](.env.example) and add a:
 > [!TIP]  
 > You can add multiple emails by separating emails with commas (,) **without a space**.
 
-### Compiling 
-1. **Install Nuitka**  
+### Compiling
+
+1. **Install Nuitka**
 
 ```bash
 python -m pip install -U Nuitka
@@ -69,26 +73,32 @@ python -m pip install -U Nuitka
 2. **Compile the script**
 
 - **On Windows:**
+
 ```bash
 python -m nuitka --onefile --windows-console-mode=disable --enable-plugin=tk-inter --output-dir=dist ./src/main.py
 ```
+
 - **On other OSes (macOS/Linux):**
+
 ```bash
 python -m nuitka --onefile --enable-plugin=tk-inter --output-dir=dist ./src/main.py
 ```
 
 You can change those settings if needed.
 
-### Scheduling 
+### Scheduling
 
-- On Windows, run [`init.bat`](init.bat) to schedule the script in the **Windows Task Scheduler**.
-- You can adjust `start_time` and `interval` in [`settings.ini`](settings.ini).
+> [!WARNING]  
+> By default, and it’s also better to compile the script (see [Compiling](#compiling)) and move it to another folder to schedule. To skip this, change `script_to_execute` in [`settings.ini`](settings.ini).
+
+- Run [`init.bat`](init.bat) to schedule the script in the **Windows Task Scheduler**.
+- You can adjust `start_time` and `interval` in `[settings.ini](settings.ini)`.
 > [!IMPORTANT]  
 > Changes require rerunning the init script to take effect.
 - Run [`remove.bat`](remove.bat) to remove the scheduled task.
 - You can also run [`src/main.py`](src/main.py) manually to test changes explicitly.
 
-> Scheduling is under development.
+> Non-Windows scheduling is under development.
 
 ## Customization
 

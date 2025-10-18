@@ -1,20 +1,21 @@
-import os
-import sys
-import json
-import undetected_chromedriver as uc
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, WebDriverException
+import ast
+import configparser
 import csv
 import io
+import json
+import os
 import re
-import ast
+import sys
+import urllib.error
 import tkinter as tk
-import configparser
 from tkinter import messagebox
-from send_email import send_email
+import undetected_chromedriver as uc
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException, WebDriverException
 import parsers
+from send_email import send_email
 
 def safe_del(self):
     try:
@@ -86,15 +87,22 @@ def create_driver(headless=True):
         driver = uc.Chrome(options=options)
         driver.set_page_load_timeout(30)
         return driver
-    except WebDriverException as e:
-        msg = (
-            f"Error initializing Chrome driver:\n{e}\n\n"
-            "How to fix:\n"
-            "- Make sure Google Chrome is installed and updated to the latest version.\n"
-            "- Check that no antivirus or firewall is blocking Chrome.\n"
-            "- Close other Chrome instances that might interfere.\n"
-            "- Run the script with proper permissions."
-        )
+    except Exception as e:
+        if isinstance(e, urllib.error.URLError):
+            msg = (
+                f"Network error initializing Chrome driver:\n{e}\n\n"
+                "How to fix:\n"
+                "- Check your internet connection.\n"
+                "- Ensure your network allows access to required resources."
+            )
+        else:
+            msg = (
+                f"Error initializing Chrome driver:\n{e}\n\n"
+                "How to fix:\n"
+                "- Make sure Google Chrome is installed and updated.\n"
+                "- Close other Chrome instances.\n"
+                "- Check antivirus/firewall settings."
+            )
         show_error_prompt("Driver Initialization Failed", msg)
 
 def get_html(driver, url, wait_selector):

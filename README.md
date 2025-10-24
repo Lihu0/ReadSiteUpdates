@@ -32,7 +32,7 @@ def parse_html_example(html):
             link_tag = item.find("a", href=True)
             results.append({
                 "title": title_tag.get_text(strip=True) if title_tag else "",
-                "link": full_link
+                "link": link_tag["href"] if link_tag else ""
             })
         except Exception as e:
             print(f"Error parsing item: {e}")
@@ -60,7 +60,7 @@ Create a [`.env`](.env) file based on [`.env.example`](.env.example) and add a:
 - Sender email password
 
 > [!TIP]  
-> You can add multiple emails by separating emails with commas (,) **without a space**.
+> You can add multiple emails by separating emails with commas (,) **without a space**
 
 ### Compiling
 
@@ -72,24 +72,24 @@ python -m pip install -U Nuitka
 
 2. **Compile the script**
 
-- **On Windows:**
+    - **On Windows:**
 
-```bash
-python -m nuitka --onefile --windows-console-mode=disable --enable-plugin=tk-inter --output-dir=dist ./src/main.py
-```
+    ```bash
+    python -m nuitka --onefile --windows-console-mode=disable --enable-plugin=tk-inter --output-dir=dist ./src/main.py
+    ```
 
-- **On other OSes (macOS/Linux):**
+    - **On other OSes (macOS/Linux):**
 
-```bash
-python -m nuitka --onefile --enable-plugin=tk-inter --output-dir=dist ./src/main.py
-```
+   ```bash
+    python -m nuitka --onefile --enable-plugin=tk-inter --output-dir=dist ./src/main.py
+    ```
 
 You can change those settings if needed.
 
 ### Scheduling
 
 > [!WARNING]  
-> By default, and by recommendation, compile the script (see [Compiling](#compiling)) and move it to another folder to schedule. To skip this, change `script_to_execute` in [`settings.ini`](settings.ini).
+> By default, and by recommendation, compile the script (see [Compiling](#compiling)) and move it to another folder to schedule. To skip this, change `script_to_execute` in [`settings.ini`](settings.ini)
 
 - **Initializing**:
     - On Windows:
@@ -101,7 +101,7 @@ You can change those settings if needed.
     > Run [`scripts/init.sh`](scripts/init.sh) to schedule the script in **cron** in the [`scripts/`](scripts/) folder.
 - You can adjust `start_time` and `interval` in [`settings.ini`](settings.ini).
 > [!IMPORTANT]  
-> Changes require rerunning the init script to take effect.
+> Changes require rerunning the init script to take effect
 
 - **Removing**:
     - On Windows:

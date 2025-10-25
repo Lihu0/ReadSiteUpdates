@@ -59,8 +59,9 @@ echo Interval (minutes): %minutes%
 :: --- Create scheduled task (hidden) ---
 
 if %minutes% GEQ 1440 (
-    rem Daily schedule
-    schtasks /Create /SC DAILY /ST %start_time% /TN "ReadSiteUpdates" /TR "powershell -NoProfile -WindowStyle Hidden -Command \"Set-Location -LiteralPath '!script_folder!'; Start-Process -FilePath '!script_name!' -WorkingDirectory '!script_folder!' -WindowStyle Hidden\"" /RU "%USERNAME%" /RL LIMITED /F
+    set /a days=%minutes% / 1440
+    rem Daily schedule every !days! days
+    schtasks /Create /SC DAILY /MO !days! /ST %start_time% /TN "ReadSiteUpdates" /TR "powershell -NoProfile -WindowStyle Hidden -Command \"Set-Location -LiteralPath '!script_folder!'; Start-Process -FilePath '!script_name!' -WorkingDirectory '!script_folder!' -WindowStyle Hidden\"" /RU "%USERNAME%" /RL LIMITED /F
 ) else (
     rem Minute-based schedule
     schtasks /Create /SC MINUTE /MO %minutes% /ST %start_time% /TN "ReadSiteUpdates" /TR "powershell -NoProfile -WindowStyle Hidden -Command \"Set-Location -LiteralPath '!script_folder!'; Start-Process -FilePath '!script_name!' -WorkingDirectory '!script_folder!' -WindowStyle Hidden\"" /RU "%USERNAME%" /RL LIMITED /F

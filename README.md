@@ -98,7 +98,7 @@ You can change those settings if needed.
 
     - On other OSes:
 
-    > Run [`scripts/init.sh`](scripts/init.sh) to schedule the script in **cron** in the [`scripts/`](scripts/) folder.
+    > Change `script_to_execute` in [`settings.ini`](settings.ini) and run [`scripts/init.sh`](scripts/init.sh) to schedule the script in **cron** in the [`scripts/`](scripts/) folder.
 - You can adjust `start_time` and `interval` in [`settings.ini`](settings.ini).
 > [!IMPORTANT]  
 > Changes require rerunning the init script to take effect

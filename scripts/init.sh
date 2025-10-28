@@ -11,7 +11,11 @@ interval=""
 script_to_execute=""
 
 while IFS= read -r line; do
-    line="${line// /}"  # remove all spaces
+    line="${line%%#*}"   # remove inline comments
+    line="${line// /}"    # remove spaces
+
+    [[ -z "$line" ]] && continue
+    [[ "$line" =~ ^[;\#] ]] && continue
 
     if [[ "$line" == "$section" ]]; then
         inSection=true
@@ -40,6 +44,8 @@ if [[ "$interval" =~ ^([0-9]+(\.[0-9]+)?)([hmdHMD])$ ]]; then
         h) minutes=$(echo "$num*60" | bc) ;;
         d) minutes=$(echo "$num*1440" | bc) ;;
     esac
+    # round to nearest integer
+    minutes=$(printf "%.0f" "$minutes")
 else
     echo "Invalid interval format: $interval"
     exit 1
@@ -47,20 +53,26 @@ fi
 
 # --- Resolve absolute script path ---
 script_path=$(readlink -f "$script_to_execute")
-script_folder=$(dirname "$script_path")
 script_name=$(basename "$script_path")
+# use project root as working directory
+project_root=$(dirname "$script_path")/..
 
 # --- Debug output ---
 echo "Start Time: $start_time"
-echo "Script Folder: $script_folder"
+echo "Project Root: $project_root"
 echo "Script Name: $script_name"
 echo "Interval (minutes): $minutes"
 
 # --- Build cron command ---
-cron_command="cd '$script_folder' && ./$(basename "$script_name")"
+cron_command="cd '$project_root' && ./$(basename "$script_name") >> '$project_root/cron.log' 2>&1"
 
 # --- Determine cron line ---
-if (( $(echo "$minutes >= 1440" | bc -l) )); then
+if (( minutes >= 1440 )); then
+    # validate start_time HH:MM
+    if [[ ! "$start_time" =~ ^([01]?[0-9]|2[0-3]):([0-5][0-9])$ ]]; then
+        echo "Invalid start_time format (expected HH:MM): $start_time"
+        exit 1
+    fi
     hour="${start_time%%:*}"
     minute="${start_time##*:}"
     cron_line="$minute $hour * * * $cron_command"
@@ -69,11 +81,7 @@ else
 fi
 
 # --- Add cron job safely ---
-crontab_tmp=$(mktemp)
-crontab -l 2>/dev/null | grep -v -F "$script_name" > "$crontab_tmp" || true
-echo "$cron_line" >> "$crontab_tmp"
-crontab "$crontab_tmp"
-rm "$crontab_tmp"
+(crontab -l 2>/dev/null | grep -v -F "$script_name" || true; echo "$cron_line") | crontab -
 
 echo "Cron job added:"
 echo "$cron_line"

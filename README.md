@@ -129,7 +129,6 @@ Filename: `results_https_www_example_com_csv.csv`
 |----|---------|-------|-------|
 | 1  | Widget A | 19.99 | 25    |
 | 2  | Widget B | 24.50 | 10    |
-| 3  | Widget C | 12.00 | 0     |
 | 4  | Widget D | 29.99 | 15    |
 
 ---

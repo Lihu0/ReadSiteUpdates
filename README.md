@@ -12,9 +12,9 @@ pip install -r requirements.txt
 
 ## Usage
 
-1. **Create a parser file ([`src/parsers.py`](src/parsers.py))**
+### Create a parser file
 
-Your parser functions should follow this structure:
+Create a parser file in [`src/parsers.py`](src/parsers.py) with this structure:
 
 ```python
 from bs4 import BeautifulSoup
@@ -47,11 +47,11 @@ urls_and_parsers = [
 
 Where:
 
-- `"https://example.com"` is the URL the code fetches.
-- `parse_html_example` is the parsing function.
-- And `"div"` is the element that signals the page is fully loaded.
+- `"https://example.com"` — the URL to monitor.
+- `parse_html_example` — the parsing function.
+- `"div"` — the element that signals the page is fully loaded.
 
-2. **Configure your environment**
+### Configure your environment
 
 Create a [`.env`](.env) file based on [`.env.example`](.env.example) and add a:
 
@@ -91,27 +91,76 @@ You can change those settings if needed.
 > [!WARNING]  
 > By default, and by recommendation, compile the script (see [Compiling](#compiling)) and move it to another folder to schedule. To skip this, change `script_to_execute` in [`settings.ini`](settings.ini)
 
-- **Initializing**:
-    - On Windows:
+#### Initializing
 
-    > Run [`scripts/init.bat`](scripts/init.bat) to schedule the script in the **Windows Task Scheduler** in the [`scripts/`](scripts/) folder.
+- **Windows**
 
-    - On other OSes:
+> Run [`scripts/init.bat`](scripts/init.bat) to schedule the script in **Windows Task Scheduler**.
 
-    > Change `script_to_execute` in [`settings.ini`](settings.ini) and run [`scripts/init.sh`](scripts/init.sh) to schedule the script in **cron** in the [`scripts/`](scripts/) folder.
-- You can adjust `start_time` and `interval` in [`settings.ini`](settings.ini).
+- **Other OSes (macOS/Linux)**
+
+> Change `script_to_execute` in [`settings.ini`](settings.ini) and run [`scripts/init.sh`](scripts/init.sh) to schedule the script in **cron**.
+
+You can adjust `start_time` and `interval` in [`settings.ini`](settings.ini).
+
 > [!IMPORTANT]  
-> Changes require rerunning the init script to take effect
+> Changes require rerunning the init script to take effect.
 
-- **Removing**:
-    - On Windows:
+#### Removing
 
-    > Run [`scripts/remove.bat`](scripts/remove.bat) to remove the scheduled task in the [`scripts/`](scripts/) folder.
+- **Windows**
 
-    - On other OSes:
+> Run [`scripts/remove.bat`](scripts/remove.bat) to remove the scheduled task.
 
-    > Run [`scripts/remove.sh`](scripts/remove.sh) to remove the scheduled task in the [`scripts/`](scripts/) folder.
-- You can also run [`src/main.py`](src/main.py) (or the file you get after compiling) manually to test changes explicitly.
+- **Other OSes (macOS/Linux)**
+
+> Run [`scripts/remove.sh`](scripts/remove.sh) to remove the scheduled task.
+
+You can also run [`src/main.py`](src/main.py) (or the compiled executable) manually to test changes.
+
+## Example Usage
+
+
+### CSV Output
+
+Filename: `results_https_www_example_com_csv.csv`
+
+| id | name     | price | stock |
+|----|---------|-------|-------|
+| 1  | Widget A | 19.99 | 25    |
+| 2  | Widget B | 24.50 | 10    |
+| 3  | Widget C | 12.00 | 0     |
+| 4  | Widget D | 29.99 | 15    |
+
+---
+
+### Email Output
+
+> [!NOTE]
+> In the actual email, this content is formatted and rendered (e.g., colored +s and -s, better spacing, headings for sections).
+
+URL: https://example.com/
+
+`+`
+- **id**: 4
+- **name**: Widget D
+- **price**: 29.99
+- **stock**: 15
+
+`-`
+- **id**: 3
+- **name**: Widget C
+- **price**: 12.00
+- **stock**: 0
+
+\----
+
+URL: https://example.net/
+
+`+`
+- **id**: 101
+- **title**: Item X
+- **status**: Available
 
 ## Customization
 

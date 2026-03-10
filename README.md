@@ -118,7 +118,7 @@ You can adjust `start_time` and `interval` in [`settings.ini`](settings.ini).
 
 You can also run [`src/main.py`](src/main.py) (or the compiled executable) manually to test changes.
 
-## Example Usage
+## Usage Example
 
 
 ### CSV Output

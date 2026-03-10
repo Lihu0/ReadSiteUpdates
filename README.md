@@ -167,22 +167,22 @@ You can change how the program works by editing the [`settings.ini`](settings.in
 
 ### Scheduler
 
-- **`start_time`** — when the script should run every interval (format: `HH:MM` in 24-hour format, default: `09:00`).
-- **`interval`** — how often to check for updates (format: `[number][unit]`, default: every 24 hours).
-- **`script_to_execute`** — file for the scheduler to run (default: `main.exe`).
+- `start_time` — when the script should run every interval (format: `HH:MM` in 24-hour format, default: `09:00`).
+- `interval` — how often to check for updates (format: `[number][unit]`, default: every 24 hours).
+- `script_to_execute` — file for the scheduler to run (default: `main.exe`).
 
 ### Prompts
 
-- **`enable_error_prompts`** — shows error messages if `true` (default: `true`).
-- **`enable_info_prompts`** — shows informational prompts if `true` (default: `false`).
+- `enable_error_prompts` — shows error messages if `true` (default: `true`).
+- `enable_info_prompts` — shows informational prompts if `true` (default: `false`).
 
 ### Sites
 
-- **`disabled_sites`** — list of URLs to skip monitoring (format: `[URL, URL, URL]`, default: empty)
+- `disabled_sites` — list of URLs to skip monitoring (format: `[URL, URL, URL]`, default: empty)
 
 ### Email
 
-- **`direction`** — text direction for email content (`ltr` = left-to-right, `rtl` = right-to-left, default: `ltr`).
+- `direction` — text direction for email content (`ltr` = left-to-right, `rtl` = right-to-left, default: `ltr`).
 
 ## Licensing
 

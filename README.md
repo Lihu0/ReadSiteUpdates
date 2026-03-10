@@ -168,7 +168,7 @@ You can change how the program works by editing the [`settings.ini`](settings.in
 ### Scheduler
 
 - **`start_time`** — when the script should run every interval (format: `HH:MM` in 24-hour format, default: `09:00`).
-- **`interval`** — how often to check for updates (format: `[number][unit]`, default every 24 hours).
+- **`interval`** — how often to check for updates (format: `[number][unit]`, default: every 24 hours).
 - **`script_to_execute`** — file for the scheduler to run (default: `main.exe`).
 
 ### Prompts

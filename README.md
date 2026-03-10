@@ -178,7 +178,7 @@ You can change how the program works by editing the [`settings.ini`](settings.in
 
 ### Sites
 
-- **`disabled_sites`** — list of URLs to skip monitoring (format: `[URL, URL, URL]`,default: empty)
+- **`disabled_sites`** — list of URLs to skip monitoring (format: `[URL, URL, URL]`, default: empty)
 
 ### Email
 

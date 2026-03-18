@@ -123,7 +123,7 @@ You can also run [`src/main.py`](src/main.py) (or the compiled executable) manua
 
 ### CSV Output
 
-Filename: `results_https_www_example_com_csv.csv`
+Filename: `results_https_www_example_com.csv`
 
 | id | name     | price | stock |
 |----|---------|-------|-------|

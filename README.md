@@ -15,7 +15,7 @@ cp .env.example .env # Edit this file with your credentials
 
 ## Usage
 
-## Install dependencies
+### Install dependencies
 
 Install the required Python packages using [pip](https://pypi.org/project/pip/):
 

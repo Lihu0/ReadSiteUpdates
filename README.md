@@ -2,6 +2,17 @@
 
 **ReadSiteUpdates** is a lightweight Python script that monitors websites and sends email notifications whenever they are updated.
 
+## Quick start
+
+```bash
+git clone https://github.com/Lihu0/ReadSiteUpdates.git
+cd ReadSiteUpdates
+pip install -r requirements.txt
+
+# Create environment file
+cp .env.example .env # Edit this file with your credentials
+```
+
 ## Installation
 
 Install the required Python packages using [pip](https://pypi.org/project/pip/):
@@ -80,7 +91,7 @@ python -m pip install -U Nuitka
 
     - **On other OSes (macOS/Linux):**
 
-   ```bash
+    ```bash
     python -m nuitka --onefile --enable-plugin=tk-inter --output-dir=dist ./src/main.py
     ```
 
@@ -120,20 +131,19 @@ You can also run [`src/main.py`](src/main.py) (or the compiled executable) manua
 
 ## Usage Example
 
-
-### CSV Output
+### CSV output
 
 Filename: `results_https_www_example_com.csv`
 
 | id | name     | price | stock |
-|----|---------|-------|-------|
+|----|----------|-------|-------|
 | 1  | Widget A | 19.99 | 25    |
 | 2  | Widget B | 24.50 | 10    |
 | 4  | Widget D | 29.99 | 15    |
 
 ---
 
-### Email Output
+### Email output
 
 > [!NOTE]
 > In the actual email, this content is formatted and rendered (e.g., colored +s and -s, better spacing, headings for sections).
@@ -161,28 +171,60 @@ URL: https://example.net/
 - **title**: Item X
 - **status**: Available
 
-## Customization
+## How It Works
+
+1. **Open the website** using Selenium.
+2. **Retrieve HTML content** from the page.
+3. **Parse HTML** into a list of dictionaries using the configured parser.
+4. **Load previous CSV data** and compare it with the new results.
+5. **Check for changes:**
+   - **Yes** → Save CSV + send email notification
+   - **No** → Exit
+
+### Notes:
+
+- Each website is parsed independently
+- Changes are detected by comparing full dictionaries
+- Even small changes in data trigger updates
+- CSV is always fully rewritten on change
+
+## Configuration
 
 You can change how the program works by editing the [`settings.ini`](settings.ini) file.
 
 ### Scheduler
 
-- `start_time` — when the script should run every interval (format: `HH:MM` in 24-hour format, default: `09:00`).
-- `interval` — how often to check for updates (format: `[number][unit]`, default: every 24 hours).
-- `script_to_execute` — file for the scheduler to run (default: `main.exe`).
+- `start_time` — when the script should start running
+    - Format: `HH:MM` in 24-hour format
+    - Default: `09:00`
+- `interval` — how often the script runs
+    - Format: `[number][unit]`
+    - Default: every 24 hours
+    - Examples:
+        - `24h`, every 24 hours
+        - `6h`, every 6 hours
+        - `30m`, every 30 minutes
+- `script_to_execute` — file for the scheduler to run
+    - Default: `main.exe`
 
 ### Prompts
 
-- `enable_error_prompts` — shows error messages if `true` (default: `true`).
-- `enable_info_prompts` — shows informational prompts if `true` (default: `false`).
+- `enable_error_prompts` — shows error messages if `true`, if not, prints to console
+    - Default: `true`
+- `enable_info_prompts` — shows informational prompts if `true`, if not, prints to console
+    - Default: `false`
 
 ### Sites
 
-- `disabled_sites` — list of URLs to skip monitoring (format: `[URL, URL, URL]`, default: empty)
+- `disabled_sites` — list of URLs to skip monitoring
+    - Format: `[URL, URL, URL]` (must be a valid Python list format)
+    - Default: empty (`[]`)
 
 ### Email
 
-- `direction` — text direction for email content (`ltr` = left-to-right, `rtl` = right-to-left, default: `ltr`).
+- `direction` — text direction for email content
+    - `ltr` = left-to-right, `rtl` = right-to-left
+    - Default: `ltr`.
 
 ## Licensing
 

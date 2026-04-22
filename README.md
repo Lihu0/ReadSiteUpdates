@@ -13,15 +13,15 @@ pip install -r requirements.txt
 cp .env.example .env # Edit this file with your credentials
 ```
 
-## Installation
+## Usage
+
+## Install dependencies
 
 Install the required Python packages using [pip](https://pypi.org/project/pip/):
 
 ```bash
 pip install -r requirements.txt
 ```
-
-## Usage
 
 ### Create a parser file
 

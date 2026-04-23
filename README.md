@@ -82,18 +82,17 @@ python -m pip install -U Nuitka
 ```
 
 2. **Compile the script**
+   - **On Windows:**
 
-    - **On Windows:**
+   ```bash
+   python -m nuitka --onefile --windows-console-mode=disable --enable-plugin=tk-inter --output-dir=dist ./src/main.py
+   ```
 
-    ```bash
-    python -m nuitka --onefile --windows-console-mode=disable --enable-plugin=tk-inter --output-dir=dist ./src/main.py
-    ```
+   - **On other OSes (macOS/Linux):**
 
-    - **On other OSes (macOS/Linux):**
-
-    ```bash
-    python -m nuitka --onefile --enable-plugin=tk-inter --output-dir=dist ./src/main.py
-    ```
+   ```bash
+   python -m nuitka --onefile --enable-plugin=tk-inter --output-dir=dist ./src/main.py
+   ```
 
 You can change those settings if needed.
 
@@ -135,11 +134,11 @@ You can also run [`src/main.py`](src/main.py) (or the compiled executable) manua
 
 Filename: `results_https_www_example_com.csv`
 
-| id | name     | price | stock |
-|----|----------|-------|-------|
-| 1  | Widget A | 19.99 | 25    |
-| 2  | Widget B | 24.50 | 10    |
-| 4  | Widget D | 29.99 | 15    |
+| id  | name     | price | stock |
+| --- | -------- | ----- | ----- |
+| 1   | Widget A | 19.99 | 25    |
+| 2   | Widget B | 24.50 | 10    |
+| 4   | Widget D | 29.99 | 15    |
 
 ---
 
@@ -151,12 +150,14 @@ Filename: `results_https_www_example_com.csv`
 URL: https://example.com/
 
 `+`
+
 - **id**: 4
 - **name**: Widget D
 - **price**: 29.99
 - **stock**: 15
 
 `-`
+
 - **id**: 3
 - **name**: Widget C
 - **price**: 12.00
@@ -167,6 +168,7 @@ URL: https://example.com/
 URL: https://example.net/
 
 `+`
+
 - **id**: 101
 - **title**: Item X
 - **status**: Available
@@ -195,36 +197,36 @@ You can change how the program works by editing the [`settings.ini`](settings.in
 ### Scheduler
 
 - `start_time` — when the script should start running
-    - Format: `HH:MM` in 24-hour format
-    - Default: `09:00`
+  - Format: `HH:MM` in 24-hour format
+  - Default: `09:00`
 - `interval` — how often the script runs
-    - Format: `[number][unit]`
-    - Default: every 24 hours
-    - Examples:
-        - `24h`, every 24 hours
-        - `6h`, every 6 hours
-        - `30m`, every 30 minutes
+  - Format: `[number][unit]`
+  - Default: every 24 hours
+  - Examples:
+    - `24h`, every 24 hours
+    - `6h`, every 6 hours
+    - `30m`, every 30 minutes
 - `script_to_execute` — file for the scheduler to run
-    - Default: `main.exe`
+  - Default: `main.exe`
 
 ### Prompts
 
 - `enable_error_prompts` — shows error messages if `true`, if not, prints to console
-    - Default: `true`
+  - Default: `true`
 - `enable_info_prompts` — shows informational prompts if `true`, if not, prints to console
-    - Default: `false`
+  - Default: `false`
 
 ### Sites
 
 - `disabled_sites` — list of URLs to skip monitoring
-    - Format: `[URL, URL, URL]` (must be a valid Python list format)
-    - Default: empty (`[]`)
+  - Format: `[URL, URL, URL]` (must be a valid Python list format)
+  - Default: empty (`[]`)
 
 ### Email
 
 - `direction` — text direction for email content
-    - `ltr` = left-to-right, `rtl` = right-to-left
-    - Default: `ltr`.
+  - `ltr` = left-to-right, `rtl` = right-to-left
+  - Default: `ltr`.
 
 ## Licensing
 
